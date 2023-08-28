@@ -39,14 +39,16 @@ export const getUserFromAWS = (user) => {
 };
 
 export const getUserFromJwtAuth = (user) => {
+  // console.log('user in getUserFromJwtAuth ',user);
+  // console.log('authRole.User.role ',authRole.User.role);
   if (user)
     return {
-      id: 1,
+      id: user.id,
       uid: user._id,
-      displayName: user.name,
+      displayName: user.firstName,
       email: user.email,
       photoURL: user.avatar,
-      role: authRole.User,
+      role: authRole.User.role,
     };
   return user;
 };

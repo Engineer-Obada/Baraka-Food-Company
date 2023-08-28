@@ -23,6 +23,7 @@ const Products = (props) => {
          isAddProductOpen,
          productSlected,
          onOpenEditProduct,
+         onChangeStatus,
          reCallAPI
         } = props;
 
@@ -127,6 +128,7 @@ const Products = (props) => {
       onOpenAddProduct={onOpenAddProduct} 
       productsTableData={productsTableData} tableData={tableData} 
       onDeleteProduct={onDeleteProduct}
+      onChangeStatus={onChangeStatus}
       />
     </AppCard>
     </AppScrollbar>
@@ -147,5 +149,6 @@ Products.propTypes = {
   onOpenAddProduct: PropTypes.func,
   isAddProductOpen: PropTypes.bool,
   onOpenEditProduct: Products.func,
+  onChangeStatus: Products.func,
   productSlected: PropTypes.object
 };

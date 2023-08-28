@@ -21,7 +21,10 @@ const JWTAuthAuthProvider = ({children}) => {
 
   useEffect(() => {
     const getAuthUser = () => {
+      
       const token = localStorage.getItem('token');
+      console.log("token ",token)
+      console.log("toen ",firebaseData)
 
       if (!token) {
         setJWTAuthData({
@@ -32,22 +35,27 @@ const JWTAuthAuthProvider = ({children}) => {
         return;
       }
       setAuthToken(token);
-      jwtAxios
-        .get('/auth')
-        .then(({data}) =>
-          setJWTAuthData({
-            user: data,
-            isLoading: false,
-            isAuthenticated: true,
-          }),
-        )
-        .catch(() =>
-          setJWTAuthData({
-            user: undefined,
-            isLoading: false,
-            isAuthenticated: false,
-          }),
-        );
+      setJWTAuthData({
+                user: {},
+                isLoading: false,
+                isAuthenticated: true,
+              })
+    //   jwtAxios
+    //     .get('/auth')
+    //     .then(({data}) =>
+    //       setJWTAuthData({
+    //         user: data,
+    //         isLoading: false,
+    //         isAuthenticated: true,
+    //       }),
+    //     )
+    //     .catch(() =>
+    //       setJWTAuthData({
+    //         user: undefined,
+    //         isLoading: false,
+    //         isAuthenticated: false,
+    //       }),
+    //     );
     };
 
     getAuthUser();
@@ -56,12 +64,15 @@ const JWTAuthAuthProvider = ({children}) => {
   const signInUser = async ({email, password}) => {
     infoViewActionsContext.fetchStart();
     try {
-      const {data} = await jwtAxios.post('auth', {email, password});
+      const {data} = await jwtAxios.post('/api/employee/login', {email, password});
+      console.log('qqq',data);
       localStorage.setItem('token', data.token);
+      console.log('soos',data.token);
+
+      localStorage.setItem('role', data.data.role);
       setAuthToken(data.token);
-      const res = await jwtAxios.get('/auth');
       setJWTAuthData({
-        user: res.data,
+        user: data.data,
         isAuthenticated: true,
         isLoading: false,
       });
@@ -78,34 +89,35 @@ const JWTAuthAuthProvider = ({children}) => {
     }
   };
 
-  const signUpUser = async ({name, email, password}) => {
-    infoViewActionsContext.fetchStart();
-    try {
-      const {data} = await jwtAxios.post('users', {name, email, password});
-      localStorage.setItem('token', data.token);
-      setAuthToken(data.token);
-      const res = await jwtAxios.get('/auth');
-      setJWTAuthData({
-        user: res.data,
-        isAuthenticated: true,
-        isLoading: false,
-      });
-      infoViewActionsContext.fetchSuccess();
-    } catch (error) {
-      setJWTAuthData({
-        ...firebaseData,
-        isAuthenticated: false,
-        isLoading: false,
-      });
-      console.log('error:', error.response.data.error);
-      infoViewActionsContext.fetchError(
-        error?.response?.data?.error || 'Something went wrong',
-      );
-    }
-  };
+  // const signUpUser = async ({name, email, password}) => {
+  //   infoViewActionsContext.fetchStart();
+  //   try {
+  //     const {data} = await jwtAxios.post('users', {name, email, password});
+  //     localStorage.setItem('token', data.token);
+  //     setAuthToken(data.token);
+  //     const res = await jwtAxios.get('/auth');
+  //     setJWTAuthData({
+  //       user: res.data,
+  //       isAuthenticated: true,
+  //       isLoading: false,
+  //     });
+  //     infoViewActionsContext.fetchSuccess();
+  //   } catch (error) {
+  //     setJWTAuthData({
+  //       ...firebaseData,
+  //       isAuthenticated: false,
+  //       isLoading: false,
+  //     });
+  //     console.log('error:', error.response.data.error);
+  //     infoViewActionsContext.fetchError(
+  //       error?.response?.data?.error || 'Something went wrong',
+  //     );
+  //   }
+  // };
 
   const logout = async () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('role');
     setAuthToken();
     setJWTAuthData({
       user: null,
@@ -118,11 +130,12 @@ const JWTAuthAuthProvider = ({children}) => {
     <JWTAuthContext.Provider
       value={{
         ...firebaseData,
+
       }}
     >
       <JWTAuthActionsContext.Provider
         value={{
-          signUpUser,
+          // signUpUser,
           signInUser,
           logout,
         }}

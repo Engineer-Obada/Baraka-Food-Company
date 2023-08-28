@@ -1,10 +1,21 @@
 import axios from 'axios';
 
-export default axios.create({
+const instance = axios.create({
   headers: {
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*', 
+    'Access-Control-Allow-Origin': '*',
   },
 });
-export  const baseURL = '';
-// export  const baseURL = 'http://192.168.43.197:8080';
+
+// Intercept the request and add the authorization header
+instance.interceptors.request.use((config) => {
+  const public_token = localStorage.getItem('token');
+  if (public_token) {
+    config.headers['Authorization'] = 'Bearer ' + public_token;
+  }
+  return config;
+});
+
+export default instance;
+
+export const baseURL = 'https://cors-anywhere.herokuapp.com/http://ubcfood.000webhostapp.com';

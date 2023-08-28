@@ -33,17 +33,7 @@ const CustomerTable = (props) => {
           }}
         >
           
-          {/* {CustomerData.data && CustomerData.data.map((row) => (
-            <TableItem
-             row={row}
-             key={row.id}
-             handelOpenClick={handelOpenClick}
-             handelOpenRejectClick={handelOpenRejectClick}
-             onDeleteCustomer={onDeleteCustomer}
-             onUpdateStatusCustomer={onUpdateStatusCustomer}
-            />
-          ))} */}
-          {CustomerData && CustomerData.map((row) => (
+          {CustomerData.data && CustomerData.data.map((row) => (
             <TableItem
              row={row}
              key={row.id}
@@ -53,6 +43,16 @@ const CustomerTable = (props) => {
              onUpdateStatusCustomer={onUpdateStatusCustomer}
             />
           ))}
+          {/* {CustomerData && CustomerData.map((row) => (
+            <TableItem
+             row={row}
+             key={row.id}
+             handelOpenClick={handelOpenClick}
+             handelOpenRejectClick={handelOpenRejectClick}
+             onDeleteCustomer={onDeleteCustomer}
+             onUpdateStatusCustomer={onUpdateStatusCustomer}
+            />
+          ))} */}
         </TableBody>
       </Table>
     </AppTableContainer>

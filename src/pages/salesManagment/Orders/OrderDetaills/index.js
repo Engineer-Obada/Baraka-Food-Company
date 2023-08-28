@@ -1,24 +1,22 @@
-import React, { useEffect, useState }  from 'react';
+import React, {  useState }  from 'react';
 import {Box, Grid} from '@mui/material';
 import AppCard from '@crema/core/AppCard';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {Fonts} from 'shared/constants/AppEnums';
 import AppAnimate from '@crema/core/AppAnimate';
 import AppGridContainer from '@crema/core/AppGridContainer';
-import {useGetDataApi} from '@crema/utility/APIHooks';
 import AppDialog from '@crema/core/AppDialog';
 import PropTypes from 'prop-types';
 import OrderDetailsTable from './OrderDetailsTable';
 import AddItem from './OrderDetailsTable/AddItemToOrder';
-import { baseURL } from '@crema/services/ApiConfig';
 import SendNote from './OrderDetailsTable/SendNote';
 
-const OrderDetails = ({isOpenEdit,onClickCloseEdit,orderId}) => {
-  const [{apiData}, {setQueryParams,reCallAPI}] = useGetDataApi(`${baseURL}/api/order/edit/`, [], {});
+const OrderDetails = ({isOpenEdit,onClickCloseEdit,orderId,reCallAPI}) => {
 
-  useEffect(()=>{
-    setQueryParams({id:orderId})
-  },[orderId])
+ 
+  // useEffect(()=>{
+  //   setQueryParams({id:orderId})
+  // },[orderId])
 
 
 
@@ -31,8 +29,7 @@ const OrderDetails = ({isOpenEdit,onClickCloseEdit,orderId}) => {
   const onClickCloseNote = ()=>{
     setOpenNote(false)
   }
-
-
+  
   return (
     <AppDialog
     fullHeight={true}
@@ -41,7 +38,6 @@ const OrderDetails = ({isOpenEdit,onClickCloseEdit,orderId}) => {
     maxWidth='lg'
 
     >
-      
     <AppAnimate animation='transition.slideUpIn' delay={200} >
       <Box>
         <Box
@@ -58,11 +54,13 @@ const OrderDetails = ({isOpenEdit,onClickCloseEdit,orderId}) => {
 
 
 
+
          <Box>
               
           <AddItem
           reCallAPI={reCallAPI}
-          orderId={orderId} />
+          orderId={orderId}
+           />
          </Box>
 
 
@@ -85,12 +83,12 @@ const OrderDetails = ({isOpenEdit,onClickCloseEdit,orderId}) => {
                 </Box>
               }
             >
-              <OrderDetailsTable
-              onClickOpenNote={onClickOpenNote}
-              orderId={orderId}
-              cartItems={apiData} 
-              reCallAPI={reCallAPI}
-          />
+                  <OrderDetailsTable
+                  onClickOpenNote={onClickOpenNote}
+                  orderId={orderId}
+                  reCallAPI={reCallAPI}
+              />
+             
             </AppCard>
 
 
@@ -114,6 +112,7 @@ const OrderDetails = ({isOpenEdit,onClickCloseEdit,orderId}) => {
 export default OrderDetails;
 OrderDetails.propTypes = {
   onClickCloseEdit: PropTypes.func,
+  reCallAPI: PropTypes.func,
   isOpenEdit: PropTypes.bool,
   orderId: PropTypes.number,
 };

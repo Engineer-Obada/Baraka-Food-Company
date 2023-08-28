@@ -1,21 +1,21 @@
 const productData = {
     categoryData:[
         {
-            id: 7,
+            id: 1,
             nameCategory: 'Apple Inc.',
-            created: '23 Jan, 2019',
+            created_at: '23 Jan, 2019',
             logo: '/assets/images/companyLogos/apple.png',
           },
           {
-            id: 3,
+            id: 2,
             nameCategory: 'Microsoft',
-            created: '23 Apr, 2019',
+            created_at: '23 Apr, 2019',
             logo: '/assets/images/companyLogos/microsoft.png',
           },
           {
-            id: 4,
+            id: 3,
             nameCategory: 'Netflix',
-            created: '28 Feb, 2019',
+            created_at: '28 Feb, 2019',
             logo: '/assets/images/companyLogos/netflix.png',
           },
       

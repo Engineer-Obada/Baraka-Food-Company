@@ -1,11 +1,14 @@
 import axios from 'axios';
 
 const jwtAxios = axios.create({
-  baseURL: 'https://crema-mongo-api.herokuapp.com/api/', //YOUR_API_URL HERE
+  baseURL:'https://cors-anywhere.herokuapp.com/http://ubcfood.000webhostapp.com', //YOUR_API_URL HERE
+  // baseURL:'http://192.168.43.25:8080', //YOUR_API_URL HERE
   headers: {
     'Content-Type': 'application/json',
+    
   },
 });
+  
 jwtAxios.interceptors.response.use(
   (res) => res,
   (err) => {
@@ -18,6 +21,7 @@ jwtAxios.interceptors.response.use(
 );
 export const setAuthToken = (token) => {
   if (token) {
+    console.log('tokeninjwtAxios ',token);
     jwtAxios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
     localStorage.setItem('token', token);
   } else {

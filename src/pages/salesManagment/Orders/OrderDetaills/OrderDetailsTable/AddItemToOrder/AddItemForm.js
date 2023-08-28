@@ -11,6 +11,8 @@ import Grid from '@mui/material/Grid';
 import { useGetDataApi } from '@crema/utility/APIHooks';
 import Avatar from '@mui/material/Avatar';
 import { baseURL } from '@crema/services/ApiConfig';
+import AppTextField from '@crema/core/AppFormComponents/AppTextField';
+import { Fonts } from 'shared/constants/AppEnums';
 
 const AddProductForm = (props) => {
 
@@ -53,7 +55,7 @@ const AddProductForm = (props) => {
                   
                   
                 >
-                  {ProductData && ProductData.map((product) => {
+                  {ProductData.data && ProductData.data.map((product) => {
                     return (
                       <MenuItem
                         value={product.id}
@@ -93,6 +95,16 @@ const AddProductForm = (props) => {
                 </Select>
                 </FormControl>
               </Grid>
+              <Grid item xs={12} md={4}>
+              <AppTextField
+            sx={{
+              width: '100%',
+              fontWeight: Fonts.LIGHT,
+            }}
+            variant='outlined'
+            name='orderedQuantity'
+        />
+                </Grid>
               <Grid item xs={12} md={4}>
               <Box
         sx={{

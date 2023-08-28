@@ -1,4 +1,4 @@
-import React  from 'react';
+import React, { useEffect }   from 'react';
 import {Box, Grid} from '@mui/material';
 import AppCard from '@crema/core/AppCard';
 import IntlMessages from '@crema/utility/IntlMessages';
@@ -9,11 +9,20 @@ import AppGridContainer from '@crema/core/AppGridContainer';
 import {useGetDataApi} from '@crema/utility/APIHooks';
 import OrderSummary from './OrderSummary';
 import OrderInformation from './OrderInformation';
-import PaymentInfo from './PaymentInfo';
-// import OrderDetailsTable from '../OrderDetaills/OrderDetailsTable';
+// import PaymentInfo from './PaymentInfo';
+import OrderDetails from './OrderDetail';
+import { baseURL } from '@crema/services/ApiConfig';
+import { useParams } from 'react-router-dom';
+// import { baseURL } from '@crema/services/ApiConfig';
 
 const ViewOrder = () => {
-  const [{apiData: cartItems}] = useGetDataApi('/api/cart/get', []);
+  const {id} = useParams();
+  const [{apiData: cartItems},{setQueryParams}] = useGetDataApi(`${baseURL}/api/order/view/${id}`, []); /*api/order/view/:id*/
+  console.log('dddd',id);
+  useEffect(() => {
+
+    setQueryParams({id: id});
+  }, [id]);
 
   return (
     <AppAnimate animation='transition.slideUpIn' delay={200}>
@@ -34,22 +43,23 @@ const ViewOrder = () => {
             <AppCard
               title={
                 <Box sx={{fontSize: 16, fontWeight: Fonts.BOLD}}>
-                  Order No : #15456
+                  Order No : #{cartItems.data && cartItems.data.id}
                 </Box>
               }
              
             >
-              <OrderInformation />
+              {
+        cartItems.data && 
+              <OrderInformation cartItems={cartItems}/>
+              }
             </AppCard>
 
             <AppCard sx={{
               marginTop:'20px'
             }}>
             
-            {/* <OrderDetailsTable
-              orderId={1}
-              cartItems={apiData} 
-          /> */}
+            <OrderDetails orderId={id} />
+          
 
             </AppCard>
 
@@ -57,7 +67,7 @@ const ViewOrder = () => {
 
           <Grid item xs={12} md={4}>
             <OrderSummary cartItems={cartItems} />
-            <PaymentInfo />
+            {/* <PaymentInfo /> */}
           </Grid>
 
         </AppGridContainer>

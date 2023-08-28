@@ -25,7 +25,7 @@ const RejectOrder = ({
   // const {user} = useAuthUser();
   const infoViewActionsContext = useInfoViewActionsContext();
 
- 
+ const orderId = orderIdReject;
 
   return (
     <AppDialog
@@ -45,14 +45,14 @@ const RejectOrder = ({
         onSubmit={(data, {setSubmitting, resetForm}) => {
           setSubmitting(true);
           const ReasonRejected = {
-            orderIdReject,
             ...data,
           };
           console.log("Reason",ReasonRejected);
-          putDataApi(`${baseURL}/api/order/reject/`, infoViewActionsContext, 
+          putDataApi(`${baseURL}/api/order/reject/${orderId}`, infoViewActionsContext, 
           ReasonRejected,
           )
             .then(() => {
+              reCallAPI();
               infoViewActionsContext.showMessage(
                 'Customer has been Rejected successfully!',
               );

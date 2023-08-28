@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import AddProductForm from './AddProductForm';
 import AppDialog from '@crema/core/AppDialog';
 import {useInfoViewActionsContext} from '@crema/utility/AppContextProvider/InfoViewContextProvider';
-import {postDataApi} from '@crema/utility/APIHooks';
+import { putDataApi} from '@crema/utility/APIHooks';
 import IntlMessages from '@crema/utility/IntlMessages';
 import { baseURL } from '@crema/services/ApiConfig';
 
@@ -49,7 +49,7 @@ const AddProduct = (props) => {
             };
           console.log('NewProduct',NewProduct);
 
-            postDataApi(`${baseURL}/api/stock/add/${idWarehouse}`, infoViewActionsContext, 
+            putDataApi(`${baseURL}/api/stock/updateQuantity/${idWarehouse}`, infoViewActionsContext, 
               NewProduct,
             )
               .then(() => {

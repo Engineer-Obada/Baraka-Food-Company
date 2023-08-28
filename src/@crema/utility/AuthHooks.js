@@ -1,5 +1,5 @@
 // ForJWT Auth
-/*import { getUserFromJwtAuth } from "./helper/AuthHelper";
+import { getUserFromJwtAuth } from "./helper/AuthHelper";
 import {
   useJWTAuth,
   useJWTAuthActions,
@@ -7,6 +7,7 @@ import {
 
 export const useAuthUser = () => {
   const { user, isAuthenticated, isLoading } = useJWTAuth();
+  // console.log('user',user);
   return {
     isLoading,
     isAuthenticated,
@@ -15,45 +16,45 @@ export const useAuthUser = () => {
 };
 
 export const useAuthMethod = () => {
-  const { signInUser, signUpUser, logout } = useJWTAuthActions();
+  const { signInUser, logout } = useJWTAuthActions();
 
   return {
     signInUser,
     logout,
-    signUpUser,
+    // signUpUser,
   };
-};*/
+};
 //For Firebase Auth
-import {
-  useFirebase,
-  useFirebaseActions,
-} from '../services/auth/firebase/FirebaseAuthProvider';
-import {getUserFromFirebase} from './helper/AuthHelper';
+// import {
+//   useFirebase,
+//   useFirebaseActions,
+// } from '../services/auth/firebase/FirebaseAuthProvider';
+// import {getUserFromFirebase} from './helper/AuthHelper';
 
-export const useAuthUser = () => {
-  const {user, isAuthenticated, isLoading} = useFirebase();
-  return {
-    isLoading,
-    isAuthenticated,
-    user: getUserFromFirebase(user),
-  };
-};
+// export const useAuthUser = () => {
+//   const {user, isAuthenticated, isLoading} = useFirebase();
+//   return {
+//     isLoading,
+//     isAuthenticated,
+//     user: getUserFromFirebase(user),
+//   };
+// };
 
-export const useAuthMethod = () => {
-  const {
-    logInWithEmailAndPassword,
-    registerUserWithEmailAndPassword,
-    logInWithPopup,
-    logout,
-  } = useFirebaseActions();
+// export const useAuthMethod = () => {
+//   const {
+//     logInWithEmailAndPassword,
+//     registerUserWithEmailAndPassword,
+//     logInWithPopup,
+//     logout,
+//   } = useFirebaseActions();
 
-  return {
-    logInWithEmailAndPassword,
-    registerUserWithEmailAndPassword,
-    logInWithPopup,
-    logout,
-  };
-};
+//   return {
+//     logInWithEmailAndPassword,
+//     registerUserWithEmailAndPassword,
+//     logInWithPopup,
+//     logout,
+//   };
+// };
 /*
 // For AWS Auth
 import {getUserFromAWS} from './helper/AuthHelper';

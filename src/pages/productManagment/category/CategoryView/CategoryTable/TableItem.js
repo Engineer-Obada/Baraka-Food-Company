@@ -13,9 +13,12 @@ const TableItem = (props) => {
 const onDelte = (categoryId)=>{
   onDeleteCategory(categoryId)
 }
+const timestamp = row.created_at;
+const date = new Date(timestamp);
+const localDateString = date.toLocaleDateString();
   return (
     <TableRow
-      key={row.name}
+      key={row.id}
       sx={{
         borderBottom: '0 none',
         '& .tableCell': {
@@ -35,10 +38,10 @@ const onDelte = (categoryId)=>{
       className='item-hover'
     >
       <TableCell scope='row' className='tableCell'>
-        {row.id}.
+        {row.id}
       </TableCell>
       <TableCell
-        align='left'
+        align='left'  
         sx={{
           whiteSpace: 'no-wrap',
         }}
@@ -75,7 +78,7 @@ const onDelte = (categoryId)=>{
         }}
         className='tableCell'
       >
-        {row.created_at}
+        {localDateString}
       </TableCell>
       <TableCell
         align='left'

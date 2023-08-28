@@ -7,10 +7,15 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Box from '@mui/material/Box';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
+import { useJWTAuth } from '@crema/services/auth/jwt-auth/JWTAuthProvider';
+import { BiReceipt } from 'react-icons/bi';
 
-const OrderActions = ({onClickOpenEdit,onClickOpenReject,onDeleteOrder,data}) => {
+const OrderActions = ({onClickOpenEdit,onClickOpenReject,onClickOpenApprove,onDeleteOrder,data,onClickOpenApprovSale,onClickOpenApprovWarehous,onClickOpenApprovWarehousfinal}) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+
+  const role=useJWTAuth().user.role;
+  console.log("role",role);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -25,6 +30,20 @@ const OrderActions = ({onClickOpenEdit,onClickOpenReject,onDeleteOrder,data}) =>
   const handleOpenClickReject = () => {
     onClickOpenReject(data.id)
   };
+  const handleOpenClickApprove = () => {
+ 
+    onClickOpenApprove(data.id)
+  };
+
+  const handleOpenClickApproveSale = () => {
+    onClickOpenApprovSale(data.id)
+  };
+  const handleOpenClickApproveWarehous = () => {
+    onClickOpenApprovWarehous(data.id)
+  };
+  const handleOpenClickApproveWarehousfinal = () => {
+    onClickOpenApprovWarehousfinal(data.id)
+  };
 
   const handelDelete = ()=>{
     onDeleteOrder(data.id)
@@ -32,6 +51,10 @@ const OrderActions = ({onClickOpenEdit,onClickOpenReject,onDeleteOrder,data}) =>
 
   const handelViewOrder = (e)=>{
     nvaigate(`/order/view/${data.id}`);
+    e.stopPropagation();
+  }
+  const handelViewinvoice = (e)=>{
+    nvaigate(`/invoice/view/${data.id}`);
     e.stopPropagation();
   }
 
@@ -50,6 +73,13 @@ const OrderActions = ({onClickOpenEdit,onClickOpenReject,onDeleteOrder,data}) =>
       >
         <MoreVertIcon />
       </IconButton>
+      <IconButton
+        aria-controls='alpha-menu'
+        aria-haspopup='true'
+        onClick={handelViewinvoice}
+      >
+        <BiReceipt />
+      </IconButton>
       <Menu
         id='alpha-menu'
         anchorEl={anchorEl}
@@ -61,15 +91,68 @@ const OrderActions = ({onClickOpenEdit,onClickOpenReject,onDeleteOrder,data}) =>
         <MenuItem style={{fontSize: 14}} onClick={handelViewOrder}>
           View Order
         </MenuItem>
-        <MenuItem style={{fontSize: 14}} onClick={handleClose}>
-          Approve
+
+
+        {/* <MenuItem style={{fontSize: 14}} onClick={handleOpenClickApprove}>
+          Approve Credit
+        </MenuItem> */}
+        {role === "Credit Manager" ? (<MenuItem style={{fontSize: 14}} onClick={handleOpenClickApprove}>
+          Approve Credit
+        </MenuItem>): role === "Admin"?(<MenuItem style={{fontSize: 14}} onClick={handleOpenClickApprove}>
+          Approve Credit
+        </MenuItem>):<></>}
+
+
+
+        {/* <MenuItem style={{fontSize: 14}} onClick={handleOpenClickApproveSale}>
+          Approve Sale 
+        </MenuItem> */}
+         {role === "Sale Manager" ? (<MenuItem style={{fontSize: 14}} onClick={handleOpenClickApproveSale}>
+          Approve Sale
+        </MenuItem>): role === "Admin"?(<MenuItem style={{fontSize: 14}} onClick={handleOpenClickApproveSale}>
+          Approve Sale
+        </MenuItem>):<></>}
+
+
+
+        {/* <MenuItem style={{fontSize: 14}} onClick={handleOpenClickApproveWarehous}>
+          Approve warehouse  
+        </MenuItem>  */}
+        {role === "Warehouse Manager" ? (<MenuItem style={{fontSize: 14}} onClick={handleOpenClickApproveWarehous}>
+          Initial warehouse manager approval
+        </MenuItem>): role === "Admin"?(<MenuItem style={{fontSize: 14}} onClick={handleOpenClickApproveWarehous}>
+          Initial warehouse manager approval
+        </MenuItem>):<></>}
+        {role === "Warehouse Manager" ? (<MenuItem style={{fontSize: 14}} onClick={handleOpenClickApproveWarehous}>
+          Final warehouse manager approval
+        </MenuItem>): role === "Admin"?(<MenuItem style={{fontSize: 14}} onClick={handleOpenClickApproveWarehousfinal}>
+          Final warehouse manager approval
+        </MenuItem>):<></>}
+
+   {/* <MenuItem style={{fontSize: 14}} onClick={handleOpenClickApproveWarehous}>
+          Initial warehouse manager approval
         </MenuItem>
-        <MenuItem style={{fontSize: 14}} onClick={handleOpenClickEdit}>
+      <MenuItem style={{fontSize: 14}} onClick={handleOpenClickApproveWarehousfinal}>
+          Final warehouse manager approval
+        </MenuItem> */}
+
+
+
+        {/* <MenuItem style={{fontSize: 14}} onClick={handleOpenClickEdit}>
           Edit
-        </MenuItem>
-        <MenuItem style={{fontSize: 14}} onClick={(handleOpenClickReject)}>
+        </MenuItem> */}
+           {role === "Warehouse Manager" ? (<></>):(<MenuItem style={{fontSize: 14}} onClick={handleOpenClickEdit}>
+            Edit
+        </MenuItem>)}
+        
+       
+        {/* <MenuItem style={{fontSize: 14}} onClick={(handleOpenClickReject)}>
           Reject
-        </MenuItem>
+        </MenuItem> */}
+         {role === "Warehouse Manager" ? (<></>):(<MenuItem style={{fontSize: 14}} onClick={handleOpenClickReject}>
+          Reject
+        </MenuItem>)}
+
         <MenuItem style={{fontSize: 14}} onClick={handelDelete}>
           Delete
         </MenuItem>
@@ -80,7 +163,12 @@ const OrderActions = ({onClickOpenEdit,onClickOpenReject,onDeleteOrder,data}) =>
 export default OrderActions;
 OrderActions.propTypes = {
   onClickOpenEdit: PropTypes.func,
+  onClickOpenApprove: PropTypes.func,
   onClickOpenReject: PropTypes.func,
   onDeleteOrder: PropTypes.func,
+  handleOpenClickApprove: PropTypes.func,
+  onClickOpenApprovSale: PropTypes.func,
+  onClickOpenApprovWarehous: PropTypes.func,
+  onClickOpenApprovWarehousfinal: PropTypes.func,
   data: PropTypes.object,
 };

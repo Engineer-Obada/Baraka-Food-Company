@@ -33,7 +33,7 @@ const Category = (props) => {
 
   const onDeleteCategory = (categorId)=>{
     const selectId = categorId;
-    postDataApi(`${baseURL}/api/category/delete`,infoViewActionsContext, selectId
+    postDataApi(`${baseURL}/api/category/delete/${selectId}`,infoViewActionsContext
     ).then(()=>{
       reCallAPI();
       infoViewActionsContext.showMessage('Category Deleted Successfully');

@@ -12,7 +12,7 @@ import { baseURL } from '@crema/services/ApiConfig';
 
 const validationSchema = yup.object({
   paymentMethod: yup.string().required(<IntlMessages id='Please enter Name!' />),
-  warehouseId: yup.number().required(<IntlMessages id='Please enter Category!' />),
+  warehouseId: yup.string().required(<IntlMessages id='Please enter Category!' />),
   
 });
 
@@ -44,7 +44,7 @@ const LinkCustomer = ({
         validateOnChange={true}
         initialValues={{
           paymentMethod:customerSelected ? customerSelected.paymentMethod :'',
-          warehouseId: customerSelected ? customerSelected.warehouseId :1,
+          warehouseId: customerSelected ? customerSelected.warehouseId :'',
         
         }}
         validationSchema={validationSchema}

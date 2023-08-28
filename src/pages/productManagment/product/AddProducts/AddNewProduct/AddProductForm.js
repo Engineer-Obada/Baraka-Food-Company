@@ -15,10 +15,7 @@ import AppGridContainer from '@crema/core/AppGridContainer';
 import Grid from '@mui/material/Grid';
 import AppTextField from '@crema/core/AppFormComponents/AppTextField';
 import {Fonts} from 'shared/constants/AppEnums';
-import {alpha} from '@mui/material';
 import {useGetDataApi} from '@crema/utility/APIHooks';
-import { useDropzone } from 'react-dropzone';
-import EditIcon from '@mui/icons-material/Edit';
 import {styled} from '@mui/material/styles';
 import { baseURL } from '@crema/services/ApiConfig';
 
@@ -31,66 +28,19 @@ const StyledDivider = styled(Divider)(({theme}) => ({
   },
 }));
 
-const HeaderWrapper = styled('div')(() => {
-  return {
-    padding: 20,
-    marginLeft: -24,
-    marginRight: -24,
-    marginTop: -20,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    '& .dropzone': {
-      outline: 0,
-      '&:hover .edit-icon, &:focus .edit-icon': {
-        display: 'flex',
-      },
-    },
-  };
-});
 
-const AvatarViewWrapper = styled('div')(({theme}) => {
-  return {
-    position: 'relative',
-    cursor: 'pointer',
-    '& .edit-icon': {
-      position: 'absolute',
-      bottom: 0,
-      right: 0,
-      zIndex: 1,
-      border: `solid 2px ${theme.palette.background.paper}`,
-      backgroundColor: alpha(theme.palette.primary.main, 0.7),
-      color: theme.palette.primary.contrastText,
-      borderRadius: '50%',
-      width: 26,
-      height: 26,
-      display: 'none',
-      alignItems: 'center',
-      justifyContent: 'center',
-      transition: 'all 0.4s ease',
-      '& .MuiSvgIcon-root': {
-        fontSize: 16,
-      },
-    },
-  };
-});
 
 
 
 
 const AddProductForm = (props) => {
-  const {isSubmitting, values, setFieldValue,userImage,setUserImage}= props;
+  const { isSubmitting, setFieldValue, setUserImage } = props;
   const [{apiData: categoryList}] = useGetDataApi(`${baseURL}/api/category`, []);
   const inputLabel = React.useRef(null);
 
   // const {messages} = useIntl();
 
-  const {getRootProps, getInputProps} = useDropzone({
-    accept: 'image/*',
-    onDrop: (acceptedFiles) => {
-      setUserImage(URL.createObjectURL(acceptedFiles[0]));
-    },
-  });
+
 
 
 
@@ -101,32 +51,9 @@ const AddProductForm = (props) => {
       }}
       noValidate
       autoComplete='off'
+      
     >
-         <HeaderWrapper>
-        <div {...getRootProps({className: 'dropzone'})}>
-          <input {...getInputProps()} />
-          <label htmlFor='icon-button-file'>
-            <AvatarViewWrapper>
-              <Avatar ///////////// Dialog after open Add New Employees
-                sx={{
-                  width: 60,
-                  height: 60,
-                }}
-                src={userImage ? userImage : ''}
-              />
-              <Box className='edit-icon'>
-                <EditIcon />
-              </Box>
-            </AvatarViewWrapper>
-          </label>
-        </div>
-        {values.name ? (
-          <Box component='h4' fontWeight={Fonts.SEMI_BOLD} mt={2}>
-            {values.name}
-          </Box>
-        ) : null}
-      </HeaderWrapper>
-      <div>
+             <div>
         <AppTextField
           sx={{
             width: '100%',
@@ -222,7 +149,7 @@ const AddProductForm = (props) => {
                 >
          
                       <MenuItem
-                        value={true}
+                        value={0}
                         key={1}
                         sx={{
                           cursor: 'pointer',
@@ -235,7 +162,7 @@ const AddProductForm = (props) => {
                         </Box>
                       </MenuItem>
                       <MenuItem
-                        value={false}
+                        value={1}
                         key={2}
                         sx={{
                           cursor: 'pointer',
@@ -276,11 +203,17 @@ const AddProductForm = (props) => {
           name='price'
         />
             </Grid>
+            <AppTextField
+          name="image"
+          type="file"
+          accept="image/*"
+          inputProps={{ onChange: (event) => setUserImage(event.target.files[0]) }}
+        />
 
            
           </AppGridContainer>
         </Box>
-{/* 
+
         <Box mb={5}>
           <AppTextField
             name='description'
@@ -292,9 +225,8 @@ const AddProductForm = (props) => {
             }}
             rows='6'
             variant='outlined'
-            placeholder={messages['common.description']}
           />
-        </Box> */}
+        </Box>
 
         <StyledDivider />
       </div>

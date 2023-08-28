@@ -4,7 +4,7 @@ import * as yup from 'yup';
 import PropTypes from 'prop-types';
 import AddItemForm from './AddItemForm';
 import {useInfoViewActionsContext} from '@crema/utility/AppContextProvider/InfoViewContextProvider';
-import {postDataApi} from '@crema/utility/APIHooks';
+import {postDataApi } from '@crema/utility/APIHooks';
 import IntlMessages from '@crema/utility/IntlMessages';
 import { baseURL } from '@crema/services/ApiConfig';
 
@@ -16,13 +16,11 @@ const validationSchema = yup.object({
 const AddItem = (props) => {
 
   const {
-    handleAddProductClose,
-    reCallAPI,
+    // handleAddProductClose,
     orderId
   } = props;
 
   const infoViewActionsContext = useInfoViewActionsContext();
-
 
   return (
 
@@ -30,20 +28,22 @@ const AddItem = (props) => {
       <Formik
         validateOnChange={true}
         initialValues={{
-          productId:  7,
+          productId:  2,
+          orderedQuantity:1,
     
         }}
         validationSchema={validationSchema}
         onSubmit={(data, {setSubmitting, resetForm}) => {
           setSubmitting(true);
-            const NewProduct = {
+            const NewItem = {
               ...data,
             };
-            postDataApi(`${baseURL}/api/product/addItem/`, infoViewActionsContext, orderId,
-              NewProduct,
+            console.log('NewItem',NewItem);
+            postDataApi(`${baseURL}/api/order/addItem/${orderId}`, infoViewActionsContext,
+            NewItem,
             )
               .then(() => {
-                reCallAPI();
+                // reCallAPI();
                 infoViewActionsContext.showMessage(
                   'Item Added successfully!',
                 );
@@ -51,7 +51,7 @@ const AddItem = (props) => {
               .catch((error) => {
                 infoViewActionsContext.fetchError(error.message);
               });
-          handleAddProductClose();
+          // handleAddProductClose();
           resetForm();
           setSubmitting(false);
         }}
@@ -60,7 +60,7 @@ const AddItem = (props) => {
           <AddItemForm
             values={values}
             setFieldValue={setFieldValue}
-            handleAddProductClose={handleAddProductClose}
+            // handleAddProductClose={handleAddProductClose}
           />
         )}
       </Formik>

@@ -12,14 +12,25 @@ import OrderDetails from './OrderDetaills';
 import RejectOrder from './RejectOrder';
 import { baseURL } from '@crema/services/ApiConfig';
 import { useInfoViewActionsContext } from '@crema/utility/AppContextProvider/InfoViewContextProvider';
+import ApproveOrder from './ApproveOrder';
+import ApproveSales from './ApproveOrder/ApproveSale/ApproveSales';
+import ApproveWarehouse from './ApproveOrder/ApproveWarehouse/ApproveWarehouse';
+import ApproveWarehousefinal from './ApproveOrder/ApproveWarehousefinal/ApproveWarehousefinal';
 
 const orders = () => {
   const {messages} = useIntl();
-  const [{apiData:OrderData}, {reCallAPI}] = useGetDataApi('/api/order/showAll');
+  const [{apiData:OrderData}, {reCallAPI}] = useGetDataApi(`${baseURL}/api/order/showAll`);
+console.log('dddddddddd',OrderData);
+  const[orderId, setOrderId] = useState();
 
-  const[orderId, setOrderId] = useState(1);
+  const[orderIdReject, setOrderIdReject] = useState();
 
-  const[orderIdReject, setOrderIdReject] = useState(1);
+  const[orderIdApprove, setOrderIdApprovet] = useState();
+
+  const[orderIdApproveSale, setOrderIdApprovetSale] = useState();
+
+  const[orderIdApproveWarehouse, setOrderIdApprovetWarehouse] = useState();
+  const[orderIdApproveWarehousefinal, setOrderIdApprovetWarehousefinal] = useState();
   
 
   const infoViewActionsContext = useInfoViewActionsContext();
@@ -33,6 +44,7 @@ const orders = () => {
   const onClickOpenEdit = (id)=>{
     setOpenEdit(true)
     setOrderId(id)
+    console.log('fd',id);
     
   }
   const onClickCloseEdit = ()=>{
@@ -49,12 +61,57 @@ const orders = () => {
   const onClickCloseReject = ()=>{
     setOpenReject(false)
   }
+  const[isOpenApprove , setOpenApprove] = useState(false);
+
+  const[isOpenApproveSale , setOpenApproveSale] = useState(false);
+
+  const[isOpenApproveWarehouse , setOpenApproveWarehous] = useState(false);
+  const[isOpenApproveWarehousefinal , setOpenApproveWarehousfinal] = useState(false);
+
+  const onClickOpenApprov = (id)=>{
+
+    setOpenApprove(true)
+    setOrderIdApprovet(id)
+    
+  }
+  // *********************************************
+  const onClickOpenApprovSale = (id)=>{
+ 
+    setOpenApproveSale(true)
+    setOrderIdApprovetSale(id)
+    
+  }
+  const onClickCloseApproveSale = ()=>{
+    setOpenApproveSale(false)
+  }
+  // ****************************************
+  // *********************************************
+  const onClickOpenApprovWarehous = (id)=>{
+console.log('q',id);
+    setOpenApproveWarehous(true)
+    setOrderIdApprovetWarehouse(id)
+    
+  }
+  const onClickOpenApprovWarehousfinal = (id)=>{
+console.log('q',id);
+    setOpenApproveWarehousfinal(true)
+    setOrderIdApprovetWarehousefinal(id)
+    
+  }
+  const onClickCloseApproveWarehous = ()=>{
+    setOpenApproveWarehous(false)
+  }
+  const onClickCloseApproveWarehousfinal = ()=>{
+    setOpenApproveWarehousfinal(false)
+  }
+  // ****************************************
+  const onClickCloseApprove = ()=>{
+    setOpenApprove(false)
+  }
 
 
   const onDeleteOrder = (orderId)=>{
-    const selectId = orderId;
-    postDataApi(`${baseURL}/api/order/delete/`,infoViewActionsContext,
-      selectId
+    postDataApi(`${baseURL}/api/order/delete/${orderId}`,infoViewActionsContext
     ).then(()=>{
       reCallAPI();
       infoViewActionsContext.showMessage('Order Deleted Successfully');
@@ -94,6 +151,12 @@ const orders = () => {
           onClickCloseEdit={onClickCloseEdit}
           onClickOpenReject={onClickOpenReject}
           onDeleteOrder={onDeleteOrder}
+          onClickOpenApprove={onClickOpenApprov}
+          onClickCloseApprove={onClickCloseApprove}
+          onClickOpenApprovSale={onClickOpenApprovSale}
+          onClickCloseApproveSale={onClickCloseApproveSale}
+          onClickOpenApprovWarehous={onClickOpenApprovWarehous}
+          onClickOpenApprovWarehousfinal={onClickOpenApprovWarehousfinal}
           />
 
         </AppsContent>
@@ -102,7 +165,6 @@ const orders = () => {
         orderId={orderId}
         isOpenEdit={isOpenEdit}
         onClickCloseEdit={onClickCloseEdit}
-
         />
 
 
@@ -111,7 +173,37 @@ const orders = () => {
          orderIdReject={orderIdReject}
          isOpenReject={isOpenReject}
          onClickCloseReject={onClickCloseReject}
+         reCallAPI={reCallAPI}
         />
+
+        <ApproveOrder
+        reCallAPI={reCallAPI}
+        orderId={orderIdApprove} 
+        isOpenApprove={isOpenApprove}
+        onClickCloseApprove={onClickCloseApprove}
+        />
+
+        <ApproveSales
+        reCallAPI={reCallAPI}
+        orderId={orderIdApproveSale} 
+        isOpenApproveSale={isOpenApproveSale}
+        onClickCloseApproveSale={  onClickCloseApproveSale }
+        />
+
+        <ApproveWarehouse
+        reCallAPI={reCallAPI}
+        orderId={orderIdApproveWarehouse} 
+        isOpenApproveWarehouse={isOpenApproveWarehouse}
+        onClickCloseApproveWarehous={  onClickCloseApproveWarehous }
+        />
+        <ApproveWarehousefinal
+        reCallAPI={reCallAPI}
+        orderId={orderIdApproveWarehousefinal} 
+        isOpenApproveWarehousefinal={isOpenApproveWarehousefinal}
+        onClickCloseApproveWarehousfinal={  onClickCloseApproveWarehousfinal }
+        />
+
+
 
        
       

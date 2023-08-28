@@ -8,7 +8,7 @@ import TableItem from './TableItem';
 import AppTableContainer from '@crema/core/AppTableContainer';
 
 const ProductsTable = (props) => {
-  const {productsTableData,onDeleteProduct,onOpenEditProduct} = props;
+  const {productsTableData,onDeleteProduct,onOpenEditProduct,onChangeStatus} = props;
   return (
 
     <AppTableContainer>
@@ -29,6 +29,7 @@ const ProductsTable = (props) => {
             <TableItem row={row} key={row.id}
             onDeleteProduct={onDeleteProduct} 
             onOpenEditProduct={onOpenEditProduct}
+            onChangeStatus={onChangeStatus}
             />
           ))}
         </TableBody>
@@ -46,6 +47,7 @@ ProductsTable.defaultProps = {
 ProductsTable.propTypes = {
   productsTableData: PropTypes.array,
   onDeleteProduct: PropTypes.func,
-  onOpenEditProduct: PropTypes.func
+  onOpenEditProduct: PropTypes.func,
+  onChangeStatus: PropTypes.func,
 
 };

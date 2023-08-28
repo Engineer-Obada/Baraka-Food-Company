@@ -69,3 +69,6 @@ p {
 /* .css-1rpt010-MuiInputBase-input-MuiOutlinedInput-input{
   height: 10em;
 } */
+#root > div > div > div.customizerOption.MuiBox-root.css-115cil4{
+  display: none;
+}

@@ -11,7 +11,7 @@ import { baseURL } from '@crema/services/ApiConfig';
 
 const validationSchema = yup.object({
   nameCategory: yup.string().required(<IntlMessages id='validation.nameRequired' />),
-  created: yup.string().required(<IntlMessages id='Please enter date!' />),
+  image: yup.mixed().required('Image is required'), // Added image field validation
 
 });
 
@@ -26,19 +26,20 @@ const FormCategory = (props) => {
       <Formik
         validateOnChange={true}
         initialValues={{
-          nameCategory: 'Apple',
-          created_at:'2/2/2023',
+          nameCategory: '',
+          image: null, // Added image field
         }}
         validationSchema={validationSchema}
         onSubmit={(data, {setSubmitting, resetForm}) => {
-          console.log('data');
-
+          console.log('data',data);
+        
+          const newProduct = {
+            ...data,
+          };
           setSubmitting(true);
-          const newCategory ={
-            ...data
-          }
+
           postDataApi(`${baseURL}/api/category/add`,infoViewActionsContext,
-           newCategory
+            newProduct
            ).then(() => {
                 reCallAPI();
             infoViewActionsContext.showMessage(
@@ -59,6 +60,8 @@ const FormCategory = (props) => {
           <AddNewCategory
             values={values}
             setFieldValue={setFieldValue}
+            userImage={values.image} // Pass the userImage value to the AddProductForm component
+            setUserImage={(image) => setFieldValue('image', image)} // Update the userImage value when the user selects an image
           />
         )}
       </Formik>
@@ -75,4 +78,5 @@ export default FormCategory;
 FormCategory.propTypes = {
   selectContact: PropTypes.object,
   reCallAPI: PropTypes.func,
+  setUserImage: PropTypes.func,
 };

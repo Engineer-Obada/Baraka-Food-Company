@@ -16,7 +16,9 @@ const TableItem = (props) => {
     onDeleteCustomer,
     onUpdateStatusCustomer
   } = props;
-
+  const timestamp = row.created_at;
+  const date = new Date(timestamp);
+  const localDateString = date.toLocaleDateString();
 const onDelte = (productId)=>{
   onDeleteCustomer(productId)
 }
@@ -117,7 +119,7 @@ const onChangeCustomerStatus = (e) => {
         }}
         className='tableCell'
       >
-        {row.created_at}
+        {localDateString}
       </TableCell>
       
       <TableCell
@@ -127,8 +129,11 @@ const onChangeCustomerStatus = (e) => {
         }}
         className='tableCell'
       >
-        <Box  sx={{color: row.status === 0 ? 'red' : 'green',}}>
-            {row.status === 0 ? 'Not Linked' : ' Linked' }
+        <Box  sx={{color: row.status === null ?( 'red') :row.status === 0 ?( 'orange'):('green')}}>
+          
+        {
+          row.status===null ?('Pinding') : row.status === 0 ?('Not Linked'):('Linked')
+        }
         </Box>
       </TableCell>
       <TableCell
@@ -140,7 +145,7 @@ const onChangeCustomerStatus = (e) => {
       >
           <Box  sx={{
       color: row.accountStatus === 0 ? 'red' : 'green',
-    }}>{row.accountStatus === 0 ?'Not Acitve' : 'Active'} </Box>
+    }}>{row.accountStatus === 0 ?'Not Acitve' : ' Active'} </Box>
       </TableCell>
       <TableCell
         align='left'
@@ -158,7 +163,7 @@ const onChangeCustomerStatus = (e) => {
             },
           }}
           size='large'
-          disabled={row.status === 0 ?  false : true} 
+          disabled={row.status === null ?  (false):row.status===0?(false) : true} 
 
         >
           <LinkRounded onClick={()=>handelOpenClick(row)} />
@@ -173,7 +178,6 @@ const onChangeCustomerStatus = (e) => {
             },
           }}
           size='large'
-          disabled={row.status === 0 ? false : true} 
         >
           <CancelOutlined  onClick={() => handelOpenRejectClick(row)} />
         </IconButton>

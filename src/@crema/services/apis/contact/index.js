@@ -14,10 +14,17 @@ let recentOrdersData = recentOrders;
 
 mock.onGet('/api/order/edit/').reply((request)=>{
   const {id} = request.params;
+  console.log("iddd",id);
   const filterOrderData = OrderData.filter((item)=> +item.OrderId === +id)
 return[200,filterOrderData[0]]
 })
-mock.onPost('/api/product/addItem/').reply((request)=>{
+mock.onGet('/api/order/editt/').reply((request)=>{
+  const {id} = request.params;
+  console.log("iddd",id);
+  const filterOrderData = OrderData.filter((item)=> +item.OrderId === +id)
+return[200,filterOrderData[0]]
+})
+mock.onPost('/api/order/addItem/').reply((request)=>{
   const id = JSON.parse(request.data);
   const filterOrderData = OrderData.filter((item)=> +item.OrderId === +id)
   filterOrderData[0].data.push({
@@ -35,11 +42,11 @@ mock.onPost('/api/product/addItem/').reply((request)=>{
 
 })
 
-mock.onPost('/api/product/deleteItem/').reply((request)=>{
+mock.onPost('/api/orderItem/delete/').reply((request)=>{
   const data = JSON.parse(request.data);
   const updatedOrderDetail = OrderData.map((order) => {
-    if (order.OrderId === data.orderid) {
-      const filteredData = order.data.filter((item) => item.id !== data.itemid);
+    if (order.OrderId === data.orderId) {
+      const filteredData = order.data.filter((item) => item.id !== data.itemId);
       return {
         ...order,
         data: filteredData,
@@ -56,12 +63,12 @@ mock.onPost('/api/product/deleteItem/').reply((request)=>{
 mock.onPut('/api/product/incrementItem/').reply((request)=>{
   const data = JSON.parse(request.data);
   const updatedOrderDetail = OrderData.map((order) => {
-    if (order.OrderId === data.orderid) {
+    if (order.OrderId === data.orderId) {
       const updateData = order.data.map((item) =>{
-        if(item.id === data.productId){
+        if(item.id === data.itemId){
           return{
             ...item,
-            approvedQuantity: data.itemApprov,
+            approvedQuantity: data.itemApprove,
 
           }
         }
@@ -80,15 +87,15 @@ mock.onPut('/api/product/incrementItem/').reply((request)=>{
 })
 
 
-mock.onPut('/api/product/DecrementItem/').reply((request)=>{
+mock.onPut('/api/orderiItem/decrementItem/').reply((request)=>{
   const data = JSON.parse(request.data);
   const updatedOrderDetail = OrderData.map((order) => {
-    if (order.OrderId === data.orderid) {
+    if (order.OrderId === data.orderId) {
       const updateData = order.data.map((item) =>{
-        if(item.id === data.productId){
+        if(item.id === data.itemId){
           return{
             ...item,
-            approvedQuantity: data.itemApprov,
+            approvedQuantity: data.itemApprove,
 
           }
         }
@@ -220,7 +227,10 @@ mock.onPut('/api/product/update').reply((request)=>{
 let categoryData = productData.categoryData;
 
 mock.onPost(`/${api}/category/add`).reply((request)=>{
-const {category} = JSON.parse(request.data);
+  console.log('dddd',JSON.parse(request.data));
+const category = JSON.parse(request.data);
+console.log('dsdsds',category);
+
 categoryData = [category,...categoryData];
 return [200,category]
 })
@@ -241,7 +251,11 @@ mock.onPost(`/${api}/category/delete`).reply((request)=>{
 
 /*************************************************/
 let warehouseData = warehouseList;
-
+mock.onGet('/api/warehous').reply((request) => {
+  console.log('request',request);
+  console.log(warehouseData);
+   return [200,warehouseData];
+ });
 mock.onGet('/api/warehouse').reply((config) => {
   const params = config.params;
   const index = params.page * 15;
@@ -250,8 +264,10 @@ mock.onGet('/api/warehouse').reply((config) => {
     warehouseData.length > 15
       ? warehouseData.slice(index, index + 15)
       : warehouseData;
+      console.log('ds',warehouseData);
   return [200, { data, count }];
 });
+
 
 mock.onPost('/api/warehouse/delete').reply((request) => {
   const { contactIds, page } = JSON.parse(request.data);

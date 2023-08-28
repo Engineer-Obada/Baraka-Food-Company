@@ -1,10 +1,10 @@
 export const authRole = {
-  Admin: ['admin'],
-  User: ['user', 'admin'],
+  Admin: ['Admin'],
+  User: ['user', 'Admin'],
 };
 
 export const RoutePermittedRole = {
-  Admin: 'admin',
+  Admin: 'Admin',
   User: 'user',
 };
 export const defaultUser = {

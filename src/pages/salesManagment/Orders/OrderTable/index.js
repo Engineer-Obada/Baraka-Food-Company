@@ -8,7 +8,19 @@ import TableItem from './TableItem';
 import AppTableContainer from '@crema/core/AppTableContainer';
 
 
-const OrderTable = ({orderData,onClickOpenEdit,onClickCloseEdit,onClickOpenReject,onDeleteOrder}) => {
+const OrderTable = ({
+  orderData,
+  onClickOpenEdit,
+  onClickCloseEdit,
+  onClickOpenReject,
+  onDeleteOrder,
+  onClickCloseApprove,
+  onClickOpenApprove,
+  onClickOpenApprovSale,
+  onClickCloseApproveSale,
+  onClickOpenApprovWarehous,
+  onClickOpenApprovWarehousfinal
+}) => {
   return (
     <AppTableContainer>
       <Table stickyHeader className='table'>
@@ -16,12 +28,18 @@ const OrderTable = ({orderData,onClickOpenEdit,onClickCloseEdit,onClickOpenRejec
           <TableHeading />
         </TableHead>
         <TableBody>
-          {orderData && orderData.map((data) => (
+          {orderData.data && orderData.data.map((data) => (
             <TableItem 
+            onClickOpenApprovWarehous={onClickOpenApprovWarehous}
+            onClickOpenApprovWarehousfinal={onClickOpenApprovWarehousfinal}
+            onClickOpenApprovSale={onClickOpenApprovSale}
+            onClickCloseApproveSale={onClickCloseApproveSale}
             onDeleteOrder={onDeleteOrder}
             onClickOpenReject={onClickOpenReject}
             onClickOpenEdit={onClickOpenEdit}
             onClickCloseEdit={onClickCloseEdit}
+            onClickOpenApprove={onClickOpenApprove}
+            onClickCloseApprove={onClickCloseApprove}
             data={data} key={data.id} />
           ))}
         </TableBody>
@@ -41,7 +59,13 @@ OrderTable.defaultProps = {
 OrderTable.propTypes = {
   orderData: PropTypes.array,
   onClickOpenEdit: PropTypes.func,
+  onClickCloseApproveSale: PropTypes.func,
+  onClickOpenApprovSale: PropTypes.func,
   onClickOpenReject: PropTypes.func,
   onClickCloseEdit: PropTypes.func,
   onDeleteOrder: PropTypes.func,
+  onClickOpenApprove: PropTypes.func,
+  onClickCloseApprove: PropTypes.func,
+  onClickOpenApprovWarehous: PropTypes.func,
+  onClickOpenApprovWarehousfinal: PropTypes.func,
 };

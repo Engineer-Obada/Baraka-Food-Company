@@ -74,20 +74,44 @@ const AddWarehouseForm = () => {
                     }}
                   >
                         <MenuItem
-                          value={"msaken"}
+                          value={"Broadway - New York City, NY"}
                           sx={{
                             cursor: 'pointer',
                           }}
                         >
-                          Street 1
+                          Broadway - New York City, NY
                         </MenuItem>
                         <MenuItem
-                          value={"Street 2"}
+                          value={"Pennsylvania Avenue - Washington, D.C."}
                           sx={{
                             cursor: 'pointer',
                           }}
                         >
-                          Street 2
+                          Pennsylvania Avenue - Washington, D.C.
+                        </MenuItem>
+                        <MenuItem
+                          value={"Rodeo Drive - Beverly Hills, CA"}
+                          sx={{
+                            cursor: 'pointer',
+                          }}
+                        >
+                          Rodeo Drive - Beverly Hills, CA
+                        </MenuItem>
+                        <MenuItem
+                          value={"Sunset Boulevard - Los Angeles, CA"}
+                          sx={{
+                            cursor: 'pointer',
+                          }}
+                        >
+                          Sunset Boulevard - Los Angeles, CA
+                        </MenuItem>
+                        <MenuItem
+                          value={"Bourbon Street - New Orleans, LA"}
+                          sx={{
+                            cursor: 'pointer',
+                          }}
+                        >
+                          Bourbon Street - New Orleans, LA
                         </MenuItem>
                   
                   </Field>
@@ -114,20 +138,28 @@ const AddWarehouseForm = () => {
                     }}
                   >
                         <MenuItem
-                          value={"Street 4"}
+                          value={"New York City, New York"}
                           sx={{
                             cursor: 'pointer',
                           }}
                         >
-                          Street 4
+                          New York City, New York
                         </MenuItem>
                         <MenuItem
-                          value={"Street 3"}
+                          value={"Chicago, Illinois"}
                           sx={{
                             cursor: 'pointer',
                           }}
                         >
-                          Street 3
+                          Chicago, Illinois
+                        </MenuItem>
+                        <MenuItem
+                          value={"Los Angeles, California"}
+                          sx={{
+                            cursor: 'pointer',
+                          }}
+                        >
+                          Los Angeles, California
                         </MenuItem>
                   
                   </Field>

@@ -9,7 +9,7 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 
 const TableItem = (props) => {
-  const {row,onDeleteProduct,onOpenEditProduct} = props;
+  const {row,onDeleteProduct,onOpenEditProduct,onChangeStatus} = props;
 const onDelte = (productId)=>{
   onDeleteProduct(productId)
 }
@@ -18,6 +18,20 @@ const onClickEditOption = (e)=>{
   onOpenEditProduct(row);
   e.stopPropagation();
 }
+
+const onChangeProductStatus = (e) => {
+  let statusCustomer = 0;
+  if(row.available === 0){
+    statusCustomer = 1
+  }
+  else{
+    statusCustomer=0
+  }
+  onChangeStatus(statusCustomer, row);
+  e.stopPropagation();
+};
+
+
   return (
     <TableRow
       key={row.name}
@@ -58,7 +72,7 @@ const onClickEditOption = (e)=>{
           }}
         >
           {row.image ? (
-            <Avatar>{row.name[0].toUpperCase()}</Avatar>
+            <Avatar >{row.name[0].toUpperCase()}</Avatar>
             ) : (
             <Avatar src={row.image} />
           )}
@@ -84,7 +98,7 @@ const onClickEditOption = (e)=>{
         }}
         className='tableCell'
       >
-        {row.categorytId}
+        {row.category.nameCategory}
       </TableCell>
       
       <TableCell
@@ -114,7 +128,7 @@ const onClickEditOption = (e)=>{
         }}
         className='tableCell'
       >
-        {row.available}
+        {row.available === 1 ? ("Available") : ("Not Available")}
       </TableCell>
       <TableCell
         align='left'
@@ -125,6 +139,7 @@ const onClickEditOption = (e)=>{
           <Switch
         size="small"
         defaultChecked 
+        onClick={onChangeProductStatus}
         />
         <IconButton
           sx={{
@@ -163,7 +178,8 @@ export default TableItem;
 TableItem.propTypes = {
   row: PropTypes.object.isRequired,
   onDeleteProduct: PropTypes.func,
-  onOpenEditProduct: PropTypes.func
+  onOpenEditProduct: PropTypes.func,
+  onChangeStatus: PropTypes.func,
 
 
 }

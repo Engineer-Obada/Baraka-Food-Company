@@ -1,8 +1,13 @@
 import AppGridContainer from '@crema/core/AppGridContainer';
 import { Box, Grid } from '@mui/material';
 import React from 'react';
+import PropTypes from 'prop-types';
 
-const DeliveryAddress = () => {
+const DeliveryAddress = ({cartItems}) => {
+  const timestamp = cartItems.data[0].orderCreated;
+  const date = new Date(timestamp);
+  const localDateString = date.toLocaleDateString();
+
   return (
     <Box 
     sx={{
@@ -27,7 +32,7 @@ const DeliveryAddress = () => {
               fontWeight:'bolder'
               }}
             >Order Created at</h5><br></br>
-            <span>Sat May 13 2023</span>
+            <span>{localDateString}</span>
           </Box>
         </Grid>
         <Grid item md={4}>
@@ -44,7 +49,7 @@ const DeliveryAddress = () => {
               fontWeight:'bolder'
               }}
             >Warehouse Name</h5><br></br>
-            <span>ABC Warehouse</span>
+            <span>{cartItems.data[0].warehouseName}</span>
           </Box>
         </Grid>
         <Grid item md={4}>
@@ -61,7 +66,7 @@ const DeliveryAddress = () => {
               fontWeight:'bolder'
               }}
             >Pyment Methods</h5><br></br>
-            <span>Cash</span>
+            <span>{cartItems.data[0].pymentMethods}</span>
           </Box>
         </Grid>
        
@@ -85,7 +90,7 @@ const DeliveryAddress = () => {
               fontWeight:'bolder'
               }}
             >Name Customer </h5><br></br>
-            <span>Obada</span>
+            <span>{cartItems.data[0].namefirst}</span>
           </Box>
         </Grid>
         <Grid item md={4}>
@@ -100,7 +105,7 @@ const DeliveryAddress = () => {
             <h5 style={{
             fontWeight:'bolder'
             }}>Email</h5><br></br>
-            <span>obada.s.alsayed@gmail.com</span>
+            <span>{cartItems.data[0].email}</span>
           </Box>
         </Grid>
         <Grid item md={4}>
@@ -115,7 +120,7 @@ const DeliveryAddress = () => {
             <h5 style={{
             fontWeight:'bolder'
             }}>Phone No</h5><br></br>
-            <span>+96358212292</span>
+            <span>{cartItems.data[0].phoneNumber}</span>
           </Box>
         </Grid>
        
@@ -126,3 +131,7 @@ const DeliveryAddress = () => {
 };
 
 export default DeliveryAddress;
+DeliveryAddress.propTypes = {
+  cartItems: PropTypes.object.isRequired,
+  
+};

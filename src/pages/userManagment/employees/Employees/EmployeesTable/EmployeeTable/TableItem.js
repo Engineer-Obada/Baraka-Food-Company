@@ -17,10 +17,10 @@ const onDelte = (productId)=>{
 const onChangeEmployeeStatus = (e) => {
   let statusCustomer = 0;
   if(row.accountStatus === 0){
-    statusCustomer = true
+    statusCustomer = 1
   }
   else{
-    statusCustomer=false
+    statusCustomer=0
   }
   onChangeStatus(statusCustomer, row);
   e.stopPropagation();

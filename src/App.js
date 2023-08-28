@@ -6,8 +6,8 @@ import AppThemeProvider from '@crema/utility/AppThemeProvider';
 import AppStyleProvider from '@crema/utility/AppStyleProvider';
 import AppLocaleProvider from '@crema/utility/AppLocaleProvider';
 import AppLayout from '@crema/core/AppLayout';
-import FirebaseAuthProvider from '@crema/services/auth/firebase/FirebaseAuthProvider';
 import {BrowserRouter} from 'react-router-dom';
+import JWTAuthAuthProvider from '@crema/services/auth/jwt-auth/JWTAuthProvider';
 
 const App = () => (
   <AppContextProvider>
@@ -15,12 +15,12 @@ const App = () => (
       <AppStyleProvider>
         <AppLocaleProvider>
           <BrowserRouter>
-            <FirebaseAuthProvider>
+            <JWTAuthAuthProvider>
               <AuthRoutes>
                 <CssBaseline />
                 <AppLayout />
               </AuthRoutes>
-            </FirebaseAuthProvider>
+            </JWTAuthAuthProvider>
           </BrowserRouter>
         </AppLocaleProvider>
       </AppStyleProvider>

@@ -6,8 +6,11 @@ import TableHeading from './TableHeading';
 import TableItem from './TableItem';
 import AppTableContainer from '@crema/core/AppTableContainer';
 import PropTypes from 'prop-types';
+import { useGetDataApi } from '@crema/utility/APIHooks';
+import { baseURL } from '@crema/services/ApiConfig';
 
-const OrderDetailsTable = ({cartItems,reCallAPI,orderId,isOpenNote,onClickOpenNote}) => {
+const OrderDetailsTable = ({orderId,isOpenNote,onClickOpenNote}) => {
+  const [{apiData},{reCallAPI}] = useGetDataApi(`${baseURL}/api/order/edit/${orderId}`,[]);
   return (
     <AppTableContainer>
       
@@ -16,7 +19,8 @@ const OrderDetailsTable = ({cartItems,reCallAPI,orderId,isOpenNote,onClickOpenNo
           <TableHeading />
         </TableHead>
         <TableBody>
-          {cartItems && cartItems.data.map((data) => (
+          {console.log('aaaaa',apiData)}
+          {apiData.data && apiData.data.map((data) => (
             <TableItem 
             onClickOpenNote={onClickOpenNote}
             isOpenNote={isOpenNote}
@@ -34,9 +38,9 @@ const OrderDetailsTable = ({cartItems,reCallAPI,orderId,isOpenNote,onClickOpenNo
 export default OrderDetailsTable;
 
 OrderDetailsTable.propTypes = {
-  cartItems: PropTypes.array,
+  cartItems: PropTypes.object,
   setTableData: PropTypes.func,
-  reCallAPI: PropTypes.func,
+  handleMessage: PropTypes.func,
   onClickOpenNote: PropTypes.func,
   orderId: PropTypes.number,
   isOpenNote: PropTypes.bool,

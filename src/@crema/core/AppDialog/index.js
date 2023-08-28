@@ -24,17 +24,23 @@ const AppDialog = ({
   title,
   actionTitle,
   fullHeight,
+  padd,
+  radius
 }) => {
   return (
     <Dialog
       sx={{
         '& .MuiDialog-paper': {
           width: '100%',
+          paddingTop:padd,
+          paddingBottom:padd,
+          borderRadius:radius
         },
         '& .MuiDialogContent-root': {
           overflowY: 'hidden',
           paddingLeft: 0,
           paddingRight: 0,
+          
         },
         ...sxStyle,
       }}
@@ -104,6 +110,8 @@ AppDialog.propTypes = {
   fullHeight: PropTypes.bool,
   actionTitle: PropTypes.string,
   sxStyle: PropTypes.object,
+  padd: PropTypes.number,
+  radius: PropTypes.number,
 };
 AppDialog.defaultProps = {
   dividers: false,

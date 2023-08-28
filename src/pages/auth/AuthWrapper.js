@@ -64,12 +64,9 @@ const AuthWrapper = ({children}) => {
                 mb: 4,
               }}
             >
-              Welcome to Crema!
+              Welcome to Braka Food Company!
             </Typography>
-            <Typography>
-              Crema is purely based on Material ui components and follows
-              Material ui guidelines.
-            </Typography>
+            
           </Box>
         </Box>
       </Card>

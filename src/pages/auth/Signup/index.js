@@ -1,8 +1,8 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import AuthWrapper from '../AuthWrapper';
-import SignupFirebase from './SignupFirebase';
 import AppLogo from '@crema/core/AppLayout/components/AppLogo';
+import SignupJwtAuth from './SignupJwtAuth';
 
 const Signup = () => {
   return (
@@ -19,7 +19,7 @@ const Signup = () => {
             <AppLogo />
           </Box>
         </Box>
-        <SignupFirebase />
+        <SignupJwtAuth />
       </Box>
     </AuthWrapper>
   );
